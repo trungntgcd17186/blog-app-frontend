@@ -1,0 +1,68 @@
+// Import Bootstrap SCSS
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+$custom-spacers: (
+  6: $spacer * 1.5,
+  7: $spacer * 1.75,
+  8: $spacer * 2,
+  9: $spacer * 2.5,
+  10: $spacer * 2.75,
+  11: $spacer * 3,
+  12: $spacer * 3.25,
+  13: $spacer * 3.5,
+  14: $spacer * 3.75,
+  15: $spacer * 4,
+  16: $spacer * 4.25,
+  17: $spacer * 4.5,
+  18: $spacer * 4.75,
+  19: $spacer * 5,
+  20: $spacer * 5.25,
+  auto: auto,
+);
+
+$spacers: map-merge($spacers, $custom-spacers);
+
+:root {
+  @each $spacer, $value in $spacers {
+    --bs-spacer-#{$spacer}: #{$value};
+  }
+}
+
+@mixin generate-spacing($prefix, $property, $start, $end) {
+  @for $i from $start through $end {
+    .d-#{$prefix}-#{$i} {
+      #{$property}: #{$i}px !important;
+    }
+  }
+}
+
+@mixin generate-spacing-direction(
+  $prefix,
+  $property,
+  $direction,
+  $start,
+  $end
+) {
+  @for $i from $start through $end {
+    .d-#{$prefix}-#{$i} {
+      #{$property}#{$direction}: #{$i}px !important;
+    }
+  }
+}
+
+@include generate-spacing("p", "padding", 0, 200);
+@include generate-spacing("m", "margin", 0, 200);
+@include generate-spacing("fs", "font-size", 0, 200);
+
+@include generate-spacing-direction("mt", "margin", "-top", 0, 200);
+@include generate-spacing-direction("mb", "margin", "-bottom", 0, 200);
+@include generate-spacing-direction("ms", "margin", "-left", 0, 200);
+@include generate-spacing-direction("me", "margin", "-right", 0, 200);
+
+@include generate-spacing-direction("pt", "padding", "-top", 0, 200);
+@include generate-spacing-direction("pb", "padding", "-bottom", 0, 200);
+@include generate-spacing-direction("ps", "padding", "-left", 0, 200);
+@include generate-spacing-direction("pe", "padding", "-right", 0, 200);
