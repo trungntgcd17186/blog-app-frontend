@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.VITE_API_URL_PROD : process.env.VITE_API_URL_LOCAL;
+
 const axiosIns = axios.create({
-  baseURL: `http://localhost:3000`,
+  baseURL: apiUrl,
 });
 
 // ℹ️ Add request interceptor to send the authorization header on each subsequent request after login
