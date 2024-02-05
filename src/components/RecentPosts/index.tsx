@@ -1,91 +1,125 @@
-import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
-import { LABEL_COLORS_MAPPING } from "../../constants";
-import useFetchListRecentPost from "../../hooks/Posts/useFetchListRecentPost";
-import { IRecentPost } from "../../types";
-import "./style.scss";
-import { handleGetDate } from "../../utils";
-import Pagination from "../Pagination";
 import { useState } from "react";
+import { Categories } from "../../constants";
+import useFetchListRecentPost from "../../hooks/Posts/useFetchListRecentPost";
+import useDebounce from "../../hooks/useDebounce";
+import { IFilter, IRecentPost } from "../../types";
 import LoadingParagraph from "../LoadingParagraph";
+import Pagination from "../Pagination";
+import PostItem from "../PostItem";
+import "./style.scss";
 
 const ITEMS_PER_PAGE = 6;
 
 const RecentPosts = () => {
-  const navigate = useNavigate();
-  const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState<IFilter>({
+    page: 1,
+    limit: ITEMS_PER_PAGE,
+    title: null,
+    content: null,
+    categories: null,
+  });
+
+  const { page, limit, title, content, categories } = filter;
+  const debouncedTitle = useDebounce(title, 500);
+  const debouncedContent = useDebounce(content, 500);
 
   const { data: { list = [], total } = {}, isFetching } =
     useFetchListRecentPost({
       page,
-      limit: ITEMS_PER_PAGE,
+      limit,
+      title: debouncedTitle,
+      content: debouncedContent,
+      categories,
     });
 
-  if (isFetching) return <LoadingParagraph />;
+  const handleFilter = (key: string, value: number | string | null) => {
+    setFilter({
+      ...filter,
+      [key]: value,
+    });
+  };
 
   return (
-    <div className="h-container row gx-4 gy-5 d-mt-80 d-pb-80">
-      <h2 className="d-mt-0 d-mb-56 fs-2 fw-medium">Recent Posts</h2>
+    <div className="h-container row  gy-5 d-mt-80 d-pb-80">
+      <h2 className="d-mt-0 mb-4 fs-2 fw-medium">Recent Posts</h2>
 
-      {list?.map((post: IRecentPost, i: number) => (
-        <div
-          key={post.id}
-          className={classNames("col-md-4 d-flex flex-column gap-4", {
-            "m-0": i < 3,
-          })}
-        >
-          <img
-            src={post?.imageUrl}
-            className="imagePost rounded card-img-top h-100"
-            alt="img"
-            role="button"
-            onClick={() => navigate(`/blog-detail/${post.id}`)}
+      <div className="row col-12 mb-4">
+        <div className="col-4">
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Find by title"
+            aria-label="title"
+            value={title || ""}
+            onChange={(e) => handleFilter("title", e.target.value)}
           />
-
-          <div className="d-mt-32 d-ps-20 d-pe-20 card-body">
-            <div className="d-flex gap-2 d-mb-16">
-              <span
-                style={{ letterSpacing: "2px" }}
-                className={classNames(
-                  "d-ps-8 d-pe-8 d-pt-4 d-pb-4 d-fs-10 text-white rounded text-uppercase fw-bold",
-                  LABEL_COLORS_MAPPING?.[post?.categories]
-                )}
-              >
-                {post?.categories}
-              </span>
-            </div>
-            <h5 className="postTitle card-title fs-4 fw-bold lh-base">
-              {post?.title}
-            </h5>
-            <div className="card-text d-mt-28 d-flex align-items-center gap-1">
-              <small className="lightTextColor fw-light">By</small>
-              <small>
-                {post?.user?.firstName + " " + post?.user?.lastName}
-              </small>{" "}
-              {" - "}
-              <small className="lightTextColor fw-light">
-                {handleGetDate(post?.createdAt)}
-              </small>
-            </div>
-            <p className="postDes card-text d-mt-28 fs-6 fw-light">
-              {post?.content}
-            </p>
-            <div
-              className="btnReadMore p-0 fw-light"
-              role="button"
-              onClick={() => navigate(`/blog-detail/${post.id}`)}
-            >
-              Read more
-            </div>
-          </div>
         </div>
-      ))}
+
+        <div className="col-4">
+          <input
+            type="search"
+            className="form-control col-4"
+            placeholder="Find by content"
+            aria-label="content"
+            value={content || ""}
+            onChange={(e) => handleFilter("content", e.target.value)}
+          />
+        </div>
+
+        <div className="col-4">
+          <select
+            className="form-select"
+            onChange={(e) => {
+              handleFilter(
+                "categories",
+                e.target.value === "all" ? null : e.target.value
+              );
+            }}
+          >
+            <option key="all" className="text-capitalize fs-6 fw-light">
+              all
+            </option>
+            {Object.keys(Categories).map((option) => (
+              <option
+                key={option}
+                className="text-capitalize fs-6 fw-light"
+                value={option.toLowerCase()}
+              >
+                {option.toLowerCase()}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="mt-0 row gx-4 gy-5 w-100">
+        {isFetching ? (
+          <LoadingParagraph />
+        ) : (
+          <>
+            {total ? (
+              <>
+                {list?.map((post: IRecentPost, i: number) => (
+                  <PostItem
+                    {...post}
+                    key={post?.id}
+                    postId={post?.id}
+                    index={i}
+                  />
+                ))}
+              </>
+            ) : (
+              <div>Empty</div>
+            )}
+          </>
+        )}
+      </div>
 
       <div className="mt-5 d-flex justify-content-center">
         <Pagination
           totalPage={Math.ceil(total / ITEMS_PER_PAGE)}
-          onPageChange={setPage}
-          currentPage={page}
+          onPageChange={(p) => handleFilter("page", p)}
+          currentPage={page || 1}
         />
       </div>
     </div>

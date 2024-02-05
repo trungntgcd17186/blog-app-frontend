@@ -6,28 +6,13 @@ export const NAV_OPTIONS = [
   },
   {
     id: 2,
-    title: "Politics",
-    path: "/",
+    title: "Manage Account",
+    path: "/manage-account",
   },
   {
     id: 3,
-    title: "Tech",
-    path: "/",
-  },
-  {
-    id: 4,
-    title: "Entertainment",
-    path: "/",
-  },
-  {
-    id: 5,
-    title: "Travel",
-    path: "/",
-  },
-  {
-    id: 6,
-    title: "Sports",
-    path: "/",
+    title: "Manage Blog",
+    path: "/manage-blog",
   },
 ];
 
@@ -81,5 +66,15 @@ export const LABEL_COLORS_MAPPING = {
   sports: "bg-info",
   lifestyle: "bg-success-emphasis",
   food: "bg-danger",
-  adventure: "bg-secondary-emphasis",
+  adventure: "bg-secondary",
 };
+
+export enum Categories {
+  POLITICS = "politics",
+  NATURE = "nature",
+  SPORTS = "sports",
+  FOOD = "food",
+  LIFESTYLE = "lifestyle",
+  TRAVEL = "travel",
+  ADVENTURE = "adventure",
+}

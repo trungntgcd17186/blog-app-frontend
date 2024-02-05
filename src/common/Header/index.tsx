@@ -1,9 +1,29 @@
+import classNames from "classnames";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { NAV_OPTIONS } from "../../constants";
-import "./styles.css";
+import { memoizedSelector } from "../../features/selector/selector";
+import { setUserInfo } from "../../features/user/userSlice";
+import { getUserData } from "../../services";
+import "./styles.scss";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const userInfo = useSelector(memoizedSelector);
+
+  const handleFetchUser = async () => {
+    const res = await getUserData();
+    if (res) dispatch(setUserInfo(res));
+  };
+
+  useEffect(() => {
+    handleFetchUser();
+  }, []);
+
   return (
     <div className="headerContainer p-4 d-flex justify-content-between align-items-center">
       <h3
@@ -16,27 +36,45 @@ const Header = () => {
 
       <ul className="d-flex align-items-center gap-4 list-unstyled">
         {NAV_OPTIONS.map((option) => (
-          <li className="fs-6 fw-bolder" role="button" key={option.id}>
+          <li
+            className="fs-6 fw-bolder"
+            role="button"
+            key={option.id}
+            onClick={() => navigate(option.path)}
+          >
             {option.title}
           </li>
         ))}
-        <svg
-          role="button"
-          xmlns="http://www.w3.org/2000/svg"
-          className="icon icon-tabler icon-tabler-search"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-          <path d="M21 21l-6 -6" />
-        </svg>
+
+        <div className="dropdown">
+          <div
+            className="fs-6 fw-bolder dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            onClick={() => setShowDropdown((prev) => !prev)}
+          >
+            {userInfo?.firstName}
+          </div>
+          <ul
+            className={classNames("mt-2 dropdown-menu end-0", {
+              show: showDropdown,
+            })}
+          >
+            <li>
+              <div
+                className="dropdown-item"
+                onClick={() => navigate("/profile")}
+              >
+                View profile
+              </div>
+            </li>
+            <li>
+              <a className="dropdown-item" href="/logout">
+                Log out
+              </a>
+            </li>
+          </ul>
+        </div>
       </ul>
     </div>
   );

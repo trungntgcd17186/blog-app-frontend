@@ -26,3 +26,16 @@ export interface IPagination {
   totalPage: number;
   onPageChange?: (page: number) => void;
 }
+
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface IFilter {
+  page?: number;
+  limit?: number;
+  title?: string | null;
+  content?: string | null;
+  categories?: string | null;
+}

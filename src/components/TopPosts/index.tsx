@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { TOP_POSTS } from "../../constants/topPosts";
-import "./style.scss";
 import { IPost } from "../../types";
 import { useNavigate } from "react-router-dom";
+import "./style.scss";
 
 const TopPosts = () => {
   const navigate = useNavigate();
@@ -12,11 +12,11 @@ const TopPosts = () => {
 
   const renderColumn = (posts: IPost[]) => {
     return (
-      <div className="m-0 col-md-4 d-flex flex-column gap-4">
+      <div className={"postWrapper col-md-4 d-flex flex-column gap-4"}>
         {posts.map((post: IPost) => (
           <div
             key={post.id}
-            className={classNames("cardWrapper m-0 p-0 card", {
+            className={classNames("cardWrapper card", {
               "h-100": posts.length === 1,
               cardCenter: posts.length === 1,
             })}
@@ -37,7 +37,7 @@ const TopPosts = () => {
   };
 
   return (
-    <div className="bg-light d-p-80 m-auto">
+    <div className="bg-light d-pt-80 d-pb-80 m-auto">
       <div className="h-container row g-4">
         {renderColumn(leftPosts)}
         {renderColumn([centerPost])}

@@ -1,10 +1,13 @@
 import { Outlet, createBrowserRouter, useLocation } from "react-router-dom";
 import Home from "../pages/Home";
-import Login from "../pages/Login";
 import Detail from "../pages/Detail/Detail";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import Login from "../pages/Login/Login";
+import ManageAccount from "../pages/ManageAccount";
+import ManageBlog from "../pages/ManageBlog";
+import Profile from "../pages/Profile";
 
 export const AuthLayout = () => {
   const location = useLocation();
@@ -35,6 +38,18 @@ export default createBrowserRouter([
       {
         element: <Login />,
         path: "/login",
+      },
+      {
+        element: <Profile />,
+        path: "/profile",
+      },
+      {
+        element: <ManageAccount />,
+        path: "/manage-account",
+      },
+      {
+        element: <ManageBlog />,
+        path: "/manage-blog",
       },
       {
         element: <Detail />,

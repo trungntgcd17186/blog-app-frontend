@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import axiosIns from "../../api/axios";
+import { getDetailPost } from "../../services";
 import { IRecentPost } from "../../types";
 
 const useFetchDetailPost = (id: string | number) => {
-  const { data, isFetching, isLoading } = useQuery<IRecentPost>({
+  const { data, isFetching, isLoading } = useQuery<Promise<IRecentPost>>({
     queryKey: ["blogDetail", id],
-    queryFn: () => {
-      return axiosIns.get(`/blogs/${id}`);
-    },
+    queryFn: ({ signal }) => getDetailPost(id, signal),
+    enabled: !!id,
+    
     refetchOnMount: false,
   });
   return {

@@ -1,21 +1,26 @@
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    transparent 0%,
-    transparent 18%,
-    rgba(0, 0, 0, 0.8) 99%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  z-index: 1;
-  border-radius: 6px;
-}
+.postWrapper {
+  @media screen and (min-width: 768px) {
+    margin: 0 !important;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      transparent 0%,
+      transparent 18%,
+      rgba(0, 0, 0, 0.8) 99%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    z-index: 1;
+    border-radius: 6px;
+  }
 
-div.cardWrapper {
-  height: 200px;
-}
+  div.cardWrapper {
+    height: 200px;
+  }
 
-.cardCenter {
-  max-height: 424px;
+  .cardCenter {
+    max-height: 424px;
+  }
 }
