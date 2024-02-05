@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import { NAV_OPTIONS } from "../../constants";
 import "./styles.css";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="headerContainer p-4 d-flex justify-content-between align-items-center">
-      <h3 className="m-0 fs-4 fw-medium" role="button">
+      <h3
+        className="m-0 fs-4 fw-medium"
+        role="button"
+        onClick={() => navigate("/")}
+      >
         Mini Blog
       </h3>
 

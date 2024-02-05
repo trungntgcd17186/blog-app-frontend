@@ -1,6 +1,12 @@
+.postTitle {
+  @include ellipsis(2)
+}
+
 .postDes {
   color: rgb(102, 102, 102);
   line-height: 28px;
+
+  @include ellipsis(3)
 }
 
 .btnReadMore {
@@ -9,4 +15,9 @@
 
 .lightTextColor {
   color: rgb(179, 179, 179);
+}
+
+.imagePost {
+  object-fit: cover;
+  max-height: 252px;
 }

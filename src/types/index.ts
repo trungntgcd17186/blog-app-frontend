@@ -2,20 +2,27 @@ export interface IPost {
   id: number;
   title: string;
   date: string;
-  img: string;
+  imageUrl: string;
+  categories: string;
+  createdAt: Date;
+  content: string;
 }
 
-export interface ILabel {
+export interface IUser {
   id: number;
-  name: string;
-  color: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  email: string;
+  role: string;
 }
 
 export interface IRecentPost extends IPost {
-  description: string;
-  label: ILabel[];
-  createdBy: {
-    name: string;
-    avatar: string;
-  };
+  user: IUser;
+}
+
+export interface IPagination {
+  currentPage: number;
+  totalPage: number;
+  onPageChange?: (page: number) => void;
 }

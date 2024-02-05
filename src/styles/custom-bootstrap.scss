@@ -31,6 +31,14 @@ $spacers: map-merge($spacers, $custom-spacers);
   }
 }
 
+@mixin ellipsis($rows) {
+  overflow: hidden;
+  -webkit-line-clamp: $rows;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
 @mixin generate-spacing($prefix, $property, $start, $end) {
   @for $i from $start through $end {
     .d-#{$prefix}-#{$i} {

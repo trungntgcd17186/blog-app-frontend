@@ -73,3 +73,13 @@ export const FOOTER_NAV_OPTIONS = [
     path: "/",
   },
 ];
+
+export const LABEL_COLORS_MAPPING = {
+  politics: "bg-secondary",
+  nature: "bg-success",
+  travel: "bg-warning",
+  sports: "bg-info",
+  lifestyle: "bg-success-emphasis",
+  food: "bg-danger",
+  adventure: "bg-secondary-emphasis",
+};
