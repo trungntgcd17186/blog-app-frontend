@@ -1,19 +1,15 @@
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
-import { handleGetDate } from "../../utils";
 import { LABEL_COLORS_MAPPING } from "../../constants";
 import { IRecentPost } from "../../types";
-import useFetchDetailPost from "../../hooks/Posts/useFetchDetailPost";
-import { useState } from "react";
+import { handleGetDate } from "../../utils";
 
 interface IProps extends IRecentPost {
-  index: number;
   postId: number;
 }
 
 const PostItem = ({
   postId,
-  index,
   imageUrl,
   title,
   content,
@@ -22,14 +18,11 @@ const PostItem = ({
   user,
 }: IProps) => {
   const navigate = useNavigate();
-  
+
   return (
     <div
       className={classNames(
-        "col-xs-12 col-sm-12 col-md-4 d-flex flex-column gap-4",
-        {
-          "m-0": index < 3,
-        }
+        "col-xs-12 col-sm-12 col-md-4 d-flex flex-column gap-4"
       )}
     >
       <img

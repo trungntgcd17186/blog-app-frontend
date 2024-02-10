@@ -7,8 +7,10 @@ import { memoizedSelector } from "../../features/selector/selector";
 import { setUserInfo } from "../../features/user/userSlice";
 import { getUserData } from "../../services";
 import "./styles.scss";
+import useMedia from "react-media-hook2";
 
 const Header = () => {
+  const [isMobile] = useMedia({ query: { maxWidth: 767 } });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -34,17 +36,19 @@ const Header = () => {
         Mini Blog
       </h3>
 
-      <ul className="d-flex align-items-center gap-4 list-unstyled">
-        {NAV_OPTIONS.map((option) => (
-          <li
-            className="fs-6 fw-bolder"
-            role="button"
-            key={option.id}
-            onClick={() => navigate(option.path)}
-          >
-            {option.title}
-          </li>
-        ))}
+      <div className="d-flex gap-4">
+        <ul className="navOptions align-items-center gap-4 list-unstyled">
+          {NAV_OPTIONS.map((option) => (
+            <li
+              className="fs-6 fw-bolder"
+              role="button"
+              key={option.id}
+              onClick={() => navigate(option.path)}
+            >
+              {option.title}
+            </li>
+          ))}
+        </ul>
 
         <div className="dropdown">
           <div
@@ -60,6 +64,20 @@ const Header = () => {
               show: showDropdown,
             })}
           >
+            {isMobile &&
+              NAV_OPTIONS.map((option) => (
+                <li
+                  className="dropdown-item"
+                  key={option.id}
+                  onClick={() => {
+                    navigate(option.path);
+                    setShowDropdown(false);
+                  }}
+                >
+                  {option.title}
+                </li>
+              ))}
+
             <li>
               <div
                 className="dropdown-item"
@@ -75,7 +93,7 @@ const Header = () => {
             </li>
           </ul>
         </div>
-      </ul>
+      </div>
     </div>
   );
 };

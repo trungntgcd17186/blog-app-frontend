@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Categories } from "../../constants";
 import useFetchListRecentPost from "../../hooks/Posts/useFetchListRecentPost";
 import useDebounce from "../../hooks/useDebounce";
 import { IFilter, IRecentPost } from "../../types";
@@ -40,71 +39,20 @@ const RecentPosts = () => {
   };
 
   return (
-    <div className="h-container row  gy-5 d-mt-80 d-pb-80">
-      <h2 className="d-mt-0 mb-4 fs-2 fw-medium">Recent Posts</h2>
-
-      <div className="row col-12 mb-4">
-        <div className="col-4">
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Find by title"
-            aria-label="title"
-            value={title || ""}
-            onChange={(e) => handleFilter("title", e.target.value)}
-          />
-        </div>
-
-        <div className="col-4">
-          <input
-            type="search"
-            className="form-control col-4"
-            placeholder="Find by content"
-            aria-label="content"
-            value={content || ""}
-            onChange={(e) => handleFilter("content", e.target.value)}
-          />
-        </div>
-
-        <div className="col-4">
-          <select
-            className="form-select"
-            onChange={(e) => {
-              handleFilter(
-                "categories",
-                e.target.value === "all" ? null : e.target.value
-              );
-            }}
-          >
-            <option key="all" className="text-capitalize fs-6 fw-light">
-              all
-            </option>
-            {Object.keys(Categories).map((option) => (
-              <option
-                key={option}
-                className="text-capitalize fs-6 fw-light"
-                value={option.toLowerCase()}
-              >
-                {option.toLowerCase()}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="mt-0 row gx-4 gy-5 w-100">
+    <div className="h-container recentPostContainer">
+      <h2 className="d-mt-0 fs-2 fw-medium">Recent Posts</h2>
+      <div className="mt-0 row gy-5">
         {isFetching ? (
           <LoadingParagraph />
         ) : (
           <>
             {total ? (
               <>
-                {list?.map((post: IRecentPost, i: number) => (
+                {list?.map((post: IRecentPost) => (
                   <PostItem
                     {...post}
                     key={post?.id}
                     postId={post?.id}
-                    index={i}
                   />
                 ))}
               </>

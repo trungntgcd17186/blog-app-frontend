@@ -1,23 +1,31 @@
-.postTitle {
-  @include ellipsis(2)
-}
+div.recentPostContainer {
+  padding: 80px 0;
 
-.postDes {
-  color: rgb(102, 102, 102);
-  line-height: 28px;
+  @media screen and (max-width: 767px) {
+    padding: 28px 16px;
+  }
+  
+  .postTitle {
+    @include ellipsis(2);
+  }
 
-  @include ellipsis(3)
-}
+  .postDes {
+    color: rgb(102, 102, 102);
+    line-height: 28px;
 
-.btnReadMore {
-  color: rgb(46, 136, 252);
-}
+    @include ellipsis(3);
+  }
 
-.lightTextColor {
-  color: rgb(179, 179, 179);
-}
+  .btnReadMore {
+    color: rgb(46, 136, 252);
+  }
 
-.imagePost {
-  object-fit: cover;
-  max-height: 252px;
+  .lightTextColor {
+    color: rgb(179, 179, 179);
+  }
+
+  .imagePost {
+    object-fit: cover;
+    max-height: 252px;
+  }
 }

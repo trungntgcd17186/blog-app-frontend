@@ -27,6 +27,15 @@
       font-size: 80px;
       line-height: 120px;
     }
+
+    @media screen and (max-width: 767px) {
+      position: relative;
+
+      .title {
+        font-size: 28px;
+        line-height: 40px;
+      }
+    }
   }
 }
 

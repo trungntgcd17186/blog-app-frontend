@@ -17,13 +17,12 @@ const TopPosts = () => {
           <div
             key={post.id}
             className={classNames("cardWrapper card", {
-              "h-100": posts.length === 1,
               cardCenter: posts.length === 1,
             })}
             role="button"
             onClick={() => navigate(`/blog-detail/${post.id}`)}
           >
-            <img src={post.img} className="card-img h-100" alt="img" />
+            <img src={post.img} className="card-img h-100 object-fit-cover" alt="img" />
             <div className="p-3 position-absolute bottom-0 z-2">
               <h5 className="card-title text-white">{post.title}</h5>
               <p className="card-text text-white text-opacity-50">
@@ -37,11 +36,14 @@ const TopPosts = () => {
   };
 
   return (
-    <div className="bg-light d-pt-80 d-pb-80 m-auto">
-      <div className="h-container row g-4">
-        {renderColumn(leftPosts)}
-        {renderColumn([centerPost])}
-        {renderColumn(rightPosts)}
+    <div className="bg-light m-auto">
+      <div className="h-container topPostContainer">
+        <h2 className="m-0 fs-2 fw-medium">Top Posts</h2>
+        <div className="row mt-4 g-4">
+          {renderColumn(leftPosts)}
+          {renderColumn([centerPost])}
+          {renderColumn(rightPosts)}
+        </div>
       </div>
     </div>
   );

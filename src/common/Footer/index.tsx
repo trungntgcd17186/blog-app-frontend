@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className="d-pt-80 d-pb-80 footer">
       <div className="h-container">
-        <div className="d-flex justify-content-between">
+        <div className="footerContent justify-content-between">
           <div>
             <h5 className="text-white mb-4 fs-6">About Us</h5>
             <p className="aboutUs fs-6 fw-light">

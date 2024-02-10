@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
-import useFetchDetailPost from "../../hooks/Posts/useFetchDetailPost";
-import "./styles.scss";
 import classNames from "classnames";
-import { LABEL_COLORS_MAPPING } from "../../constants";
-import { handleGetDate } from "../../utils";
+import { useParams } from "react-router-dom";
 import LoadingParagraph from "../../components/LoadingParagraph";
+import { LABEL_COLORS_MAPPING } from "../../constants";
+import useFetchDetailPost from "../../hooks/Posts/useFetchDetailPost";
+import { handleGetDate } from "../../utils";
+import "./styles.scss";
 
 const Detail = () => {
   const { id = "" } = useParams();

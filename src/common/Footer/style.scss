@@ -1,14 +1,21 @@
 .footer {
   background: rgb(51, 51, 51);
   color: rgb(115, 115, 115);
-}
 
-.aboutUs {
-  max-width: 320px;
-  line-height: 28px;
-}
+  &Content {
+    display: flex;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
 
-.footerOptions {
-  flex-basis: 50%;
-  height: fit-content;
+    .aboutUs {
+      max-width: 320px;
+      line-height: 28px;
+    }
+
+    .footerOptions {
+      flex-basis: 50%;
+      height: fit-content;
+    }
+  }
 }
